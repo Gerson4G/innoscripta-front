@@ -1,8 +1,14 @@
 import React from 'react';
+import { pizzaData } from '../data/pizzas';
 
-const PizzaDetail = () => {
+const PizzaDetail = ({match}) => {
+    const { params: {id} } = match;
+    const pizza = pizzaData.find( pizza => pizza.id === parseInt(id, 10));
     return(
-        <div>Pizza Detail</div>
+        <div>
+            <div> Pizza Detail for {pizza.title}</div>    
+            <div> Price: {pizza.price}</div>    
+        </div>
     );
 }
 
