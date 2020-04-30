@@ -1,80 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import '../css/App.css';
-import pizzaImg from '../imgs/pizza.jpg';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Menu from './Menu';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.default,
-  },
-  gridList: {
-    width: 500,
-    height: 450,
-    padding: '15px',
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-}));
-
-const pizzaData = [
-  {
-    img: pizzaImg,
-    title: 'Margarita',
-    price: 20,
-  },
-  {
-    img: pizzaImg,
-    title: 'Granjera',
-    price: 20,
-  },
-  {
-    img: pizzaImg,
-    title: 'Tocineta',
-    price: 20,
-  },
-  {
-    img: pizzaImg,
-    title: 'FullPizza',
-    price: 20,
-  },
-];
-
-const Menu = () => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">Pizza options</ListSubheader>
-        </GridListTile>
-        {pizzaData.map((pizza) => (
-          <GridListTile key={pizza.img} className="menu-option">
-            <img src={pizza.img} alt={pizza.title} />
-            <GridListTileBar
-              title={pizza.title}
-              subtitle={<span>Cost: {pizza.price}</span>}
-              actionIcon={
-                <IconButton aria-label={`info about ${pizza.title}`} className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
+const App =  () => {
+  return(
+    <BrowserRouter>
+      <React.Fragment>
+        <Switch>
+          <Route path="/(.)*" component={ Menu } />
+        </Switch>
+      </React.Fragment>
+    </BrowserRouter>
   );
 }
-export default Menu;
+
+export default App;
