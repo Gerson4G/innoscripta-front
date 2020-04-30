@@ -15,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
   },
   gridList: {
     width: 500,
     height: 450,
+    padding: '15px',
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -29,8 +30,23 @@ const useStyles = makeStyles((theme) => ({
 const pizzaData = [
   {
     img: pizzaImg,
-    title: 'Image',
-    author: 'author',
+    title: 'Margarita',
+    price: 20,
+  },
+  {
+    img: pizzaImg,
+    title: 'Granjera',
+    price: 20,
+  },
+  {
+    img: pizzaImg,
+    title: 'Tocineta',
+    price: 20,
+  },
+  {
+    img: pizzaImg,
+    title: 'FullPizza',
+    price: 20,
   },
 ];
 
@@ -44,11 +60,11 @@ const Menu = () => {
           <ListSubheader component="div">Pizza options</ListSubheader>
         </GridListTile>
         {pizzaData.map((pizza) => (
-          <GridListTile key={pizza.img}>
+          <GridListTile key={pizza.img} className="menu-option">
             <img src={pizza.img} alt={pizza.title} />
             <GridListTileBar
               title={pizza.title}
-              subtitle={<span>by: {pizza.author}</span>}
+              subtitle={<span>Cost: {pizza.price}</span>}
               actionIcon={
                 <IconButton aria-label={`info about ${pizza.title}`} className={classes.icon}>
                   <InfoIcon />

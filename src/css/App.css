@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.menu-option:hover {
+  scale: 1.1;
+  transition: ease-out 0.3s;
+}
+
+.MuiGridListTile-tile {
+  height: 90%!important;
+  width: 95%;
+}
