@@ -7,8 +7,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import { pizzaData } from '../data/pizzas';
 import '../css/App.css';
-import pizzaImg from '../imgs/pizza.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,33 +27,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
-
-const pizzaData = [
-  {
-    id: 1,
-    img: pizzaImg,
-    title: 'Margarita',
-    price: 20,
-  },
-  {
-    id: 2,
-    img: pizzaImg,
-    title: 'Granjera',
-    price: 20,
-  },
-  {
-    id: 3,
-    img: pizzaImg,
-    title: 'Tocineta',
-    price: 20,
-  },
-  {
-    id: 4,
-    img: pizzaImg,
-    title: 'FullPizza',
-    price: 20,
-  },
-];
 
 const Menu = () => {
   const classes = useStyles();
