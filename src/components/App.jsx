@@ -1,26 +1,64 @@
 import React from 'react';
-import logo from '../css/logo.svg';
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
 import '../css/App.css';
+import pizzaImg from '../imgs/pizza.jpg';
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+}));
+
+const pizzaData = [
+  {
+    img: pizzaImg,
+    title: 'Image',
+    author: 'author',
+  },
+];
+
+const Menu = () => {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <GridList cellHeight={180} className={classes.gridList}>
+        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+          <ListSubheader component="div">Pizza options</ListSubheader>
+        </GridListTile>
+        {pizzaData.map((pizza) => (
+          <GridListTile key={pizza.img}>
+            <img src={pizza.img} alt={pizza.title} />
+            <GridListTileBar
+              title={pizza.title}
+              subtitle={<span>by: {pizza.author}</span>}
+              actionIcon={
+                <IconButton aria-label={`info about ${pizza.title}`} className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+      </GridList>
     </div>
   );
 }
-
-export default App;
+export default Menu;
