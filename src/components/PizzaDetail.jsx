@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { pizzaData } from '../data/pizzas';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -70,13 +71,15 @@ const PizzaDetail = ({match}) => {
             >
               Add to shopping cart
             </Button>
-            <Button
-              variant="contained"
-              color="default"
-              endIcon={<NextWeekOutlinedIcon/>}
-            >
-              Buy
-            </Button>
+            <Link to="/checkout">
+              <Button
+                variant="contained"
+                color="default"
+                endIcon={<NextWeekOutlinedIcon/>}
+              >
+                Buy
+              </Button>
+            </Link>
             </CardActions>
             </Card>
         </div>
