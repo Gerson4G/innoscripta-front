@@ -1,50 +1,16 @@
 import React from 'react';
 import { pizzaData } from '../data/pizzas';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputBase from '@material-ui/core/InputBase';
-import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import NextWeekOutlinedIcon from '@material-ui/icons/NextWeekOutlined';
 import '../css/PizzaDetail.css';
 
-
-const BootstrapInput = withStyles((theme) => ({
-    root: {
-      'label + &': {
-        marginTop: theme.spacing(3),
-      },
-    },
-    input: {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      padding: '10px 26px 10px 12px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      // Use the system font instead of the default Roboto font.
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
-    },
-  }))(InputBase);
 
 const useStyles = makeStyles({
   root: {
@@ -86,10 +52,31 @@ const PizzaDetail = ({match}) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <FormControl className={classes.margin}>
-                    <InputLabel htmlFor="quantity-order">Quantity</InputLabel>
-                    <BootstrapInput id="quantity-order" placeholder="Quantity"/>
-                </FormControl>
+            <TextField
+              id="pizza-quantity"
+              label="Quantity"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              placeholder="How many pizzas"
+              size="small"
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<AddShoppingCartIcon/>}
+            >
+              Add to shopping cart
+            </Button>
+            <Button
+              variant="contained"
+              color="default"
+              endIcon={<NextWeekOutlinedIcon/>}
+            >
+              Buy
+            </Button>
             </CardActions>
             </Card>
         </div>

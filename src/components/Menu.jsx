@@ -35,7 +35,7 @@ const Menu = () => {
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">Pizza options</ListSubheader>
+          <ListSubheader component="div">YUMMI PIZZA</ListSubheader>
         </GridListTile>
         {pizzaData.map((pizza) => (
           <GridListTile key={pizza.img} className="menu-option">
