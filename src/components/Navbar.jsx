@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import Popover from '@material-ui/core/Popover';
+import { Cart } from './ShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,7 +43,7 @@ export const Navbar = () => {
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Button onClick={() => toggle(true)}><MenuIcon /></Button>
                 <Drawer anchor={'left'} open={open} onClose={() => toggle(false)}>
-                    Test
+                    <Cart/>
                 </Drawer>
             </IconButton>
             <Button  onClick={handleClick} color="inherit">Login</Button>
@@ -70,5 +71,5 @@ export const Navbar = () => {
 }
 
 const login = () => {
-    
+
 }

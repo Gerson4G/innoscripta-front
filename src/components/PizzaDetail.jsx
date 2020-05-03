@@ -14,6 +14,9 @@ import { ContextData } from './AppProvider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import '../css/PizzaDetail.css';
 
 
@@ -40,7 +43,7 @@ const useStyles = makeStyles({
 });
 
 const PizzaDetail = ({match}) => {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const { params: {id} } = match;
     const pizza = pizzaData.find( pizza => pizza.id === parseInt(id, 10));
     const classes = useStyles();
@@ -80,21 +83,14 @@ const PizzaDetail = ({match}) => {
                 size="small"
                 onChange={({target: {value}}) => setQuantity(parseInt(value, 10))}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                endIcon={<AddShoppingCartIcon/>}
-                onClick={ () => setCart([...cart, {...pizza, quantity}])}
-              >
-                Add to shopping cart
-              </Button>
+              <AddPizza setCart={setCart} cart={cart} pizza={pizza} quantity={quantity}/>
               <Link to="/checkout">
                 <Button
                   variant="contained"
                   color="default"
                   endIcon={<NextWeekOutlinedIcon/>}
                 >
-                  Buy
+                  Checkout
                 </Button>
               </Link>
               </CardActions>
@@ -106,3 +102,51 @@ const PizzaDetail = ({match}) => {
 }
 
 export default PizzaDetail;
+
+const AddPizza = ({setCart, cart, pizza, quantity}) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button
+          variant="contained"
+          color="primary"
+          endIcon={<AddShoppingCartIcon/>}
+          onClick={ () => {
+            setCart([...cart, {...pizza, quantity}]);
+            handleClick();
+          }}
+          minValue={1}
+        >
+          Add to shopping cart
+      </Button>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        message="Pizza Added!"
+        action={
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+        }
+      />
+    </div>
+  );
+}
