@@ -3,17 +3,18 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Menu from './Menu';
 import PizzaDetail from './PizzaDetail.jsx';
 import Checkout from './Checkout.jsx';
+import { AppProvider } from './AppProvider';
 
 const App =  () => {
   return(
     <BrowserRouter>
-      <React.Fragment>
+      <AppProvider>
         <Switch>
           <Route path="/" component={ Menu } exact/>
           <Route path="/pizza/:id" component={ PizzaDetail } exact/>
           <Route path="/checkout" component={ Checkout } exact/>
         </Switch>
-      </React.Fragment>
+      </AppProvider>
     </BrowserRouter>
   );
 }
