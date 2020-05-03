@@ -61,12 +61,10 @@ const PromptDialog = props => {
                 open={open}
                 keepMounted
                 //onClose={handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
+                <DialogTitle>{"Use Google's location service?"}</DialogTitle>
                 <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
+                <DialogContentText>
                 Let Google help apps determine location. This means sending anonymous location data to
                     Google, even when no apps are running.
                 </DialogContentText>
@@ -91,12 +89,10 @@ const ConfirmDialog = ({open}) => {
             open={open}
             keepMounted
             //onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
+            <DialogTitle>{"Use Google's location service?"}</DialogTitle>
             <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
+            <DialogContentText>
                 Your deliver has been placed!
             </DialogContentText>
             </DialogContent>
