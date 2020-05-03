@@ -35,8 +35,8 @@ export const Cart = props => {
                             </ListItemIcon>
                         <ListItemText primary={pizza.title} secondary={
                             <div>
-                                <span>Quantity: {pizza.quantity}</span>
-                                <span>SubTotal: {pizza.price * pizza.quantity}</span>
+                                <div>Quantity: {pizza.quantity}</div>
+                                <div>SubTotal: {pizza.price * pizza.quantity}</div>
                             </div>
                         }/>
                     </ListItem>
