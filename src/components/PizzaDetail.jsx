@@ -17,6 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Tooltip from '@material-ui/core/Tooltip';
 import '../css/PizzaDetail.css';
 
 
@@ -54,20 +55,26 @@ const PizzaDetail = ({match}) => {
           <div className={classes.container}>
               <Card className={classes.root} variant="outlined">
               <CardContent>
-                  <img src={pizza.img} alt={pizza.title} />
+                <div>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  {pizza.title}
+                    Pizza type {pizza.title}
                   </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-                      Ingredients:
-                      <List component="nav">
-                        { pizza.ingredients.map( ingredient => 
-                          <ListItem>
-                            <ListItemText primary={ingredient} />
-                          </ListItem>
-                        )}
-                      </List>
-                  </Typography>
+                </div>
+                <div>
+                  <span><img src={pizza.img} alt={pizza.title} /></span>
+                  <span style={{display: "inline-block", verticalAlign: "top", padding: "0 40px"}}>
+                    <Typography className={classes.pos} color="textSecondary">
+                        Ingredients:
+                        <List component="nav">
+                          { pizza.ingredients.map( ingredient => 
+                            <ListItem>
+                              <ListItemText primary={ingredient} />
+                            </ListItem>
+                          )}
+                        </List>
+                    </Typography>
+                  </span>
+                </div>
               </CardContent>
               <CardActions>
               <TextField
@@ -82,6 +89,7 @@ const PizzaDetail = ({match}) => {
                 placeholder="How many pizzas"
                 size="small"
                 onChange={({target: {value}}) => setQuantity(parseInt(value, 10))}
+                error={quantity < 1}
               />
               <AddPizza setCart={setCart} cart={cart} pizza={pizza} quantity={quantity}/>
               <Link to="/checkout">
@@ -105,6 +113,15 @@ export default PizzaDetail;
 
 const AddPizza = ({setCart, cart, pizza, quantity}) => {
   const [open, setOpen] = React.useState(false);
+  const [tooltipOpen, setMessage] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setMessage(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setMessage(true);
+  };
 
   const handleClick = () => {
     setOpen(true);
@@ -114,24 +131,40 @@ const AddPizza = ({setCart, cart, pizza, quantity}) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
   return (
     <div>
-      <Button
-          variant="contained"
-          color="primary"
-          endIcon={<AddShoppingCartIcon/>}
-          onClick={ () => {
-            setCart([...cart, {...pizza, quantity}]);
-            handleClick();
+       <Tooltip
+          PopperProps={{
+            disablePortal: true,
           }}
-          minValue={1}
+          onClose={handleTooltipClose}
+          open={tooltipOpen}
+          disableFocusListener
+          disableHoverListener
+          disableTouchListener
+          title="Quantity MUST be positive greather than 0"
         >
-          Add to shopping cart
-      </Button>
+          <Button
+              variant="contained"
+              color="primary"
+              endIcon={<AddShoppingCartIcon/>}
+              onClick={ () => {
+                if(quantity < 1){
+                  handleTooltipOpen();
+                }
+                else{
+                  setCart([...cart, {...pizza, quantity}]);
+                  handleClick();
+                }
+              }}
+              minValue={1}
+            >
+              Add to shopping cart
+          </Button>
+        </Tooltip>
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
