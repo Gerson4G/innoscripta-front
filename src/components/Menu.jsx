@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import { pizzaData } from '../data/pizzas';
@@ -35,7 +35,9 @@ const Menu = () => {
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">YUMMI PIZZA</ListSubheader>
+          <Typography variant="h6" className={classes.title}>
+                YUMMI PIZZA
+          </Typography>
         </GridListTile>
         {pizzaData.map((pizza) => (
           <GridListTile key={pizza.img} className="menu-option">
