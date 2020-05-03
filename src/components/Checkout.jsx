@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { InputLabel, Input, FormHelperText } from '@material-ui/core';
+import { InputLabel, Input, FormHelperText, Button } from '@material-ui/core';
+import NextWeekOutlinedIcon from '@material-ui/icons/NextWeekOutlined';
 
 export default class Checkout extends Component {
   render() {
@@ -24,6 +25,14 @@ export default class Checkout extends Component {
                 <Input id="deliver-input" aria-describedby="deliver-helper" />
                 <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
             </div>
+            <Button
+                variant="contained"
+                color="default"
+                endIcon={<NextWeekOutlinedIcon/>}
+                type="submit"
+              >
+                Buy
+              </Button>
         </form>
       </>
     )
