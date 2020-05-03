@@ -11,6 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import NextWeekOutlinedIcon from '@material-ui/icons/NextWeekOutlined';
 import { ContextData } from './AppProvider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import '../css/PizzaDetail.css';
 
 
@@ -54,6 +57,13 @@ const PizzaDetail = ({match}) => {
                   </Typography>
                   <Typography className={classes.pos} color="textSecondary">
                       Ingredients:
+                      <List component="nav">
+                        { pizza.ingredients.map( ingredient => 
+                          <ListItem>
+                            <ListItemText primary={ingredient} />
+                          </ListItem>
+                        )}
+                      </List>
                   </Typography>
               </CardContent>
               <CardActions>
