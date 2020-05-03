@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,6 +23,18 @@ const useStyles = makeStyles((theme) => ({
 export const Navbar = () => {
     const classes = useStyles();
     const [open, toggle] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const popoverOpen = Boolean(anchorEl);
+    const id = popoverOpen ? 'simple-popover' : undefined;
 
     return(
         <AppBar position="static">
@@ -32,8 +45,30 @@ export const Navbar = () => {
                     Test
                 </Drawer>
             </IconButton>
-            <Button color="inherit">Login</Button>
+            <Button  onClick={handleClick} color="inherit">Login</Button>
             </Toolbar>
+            <Popover
+                id={id}
+                open={popoverOpen}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <input></input>
+                <input></input>
+                <Button onClick={() => login()}>Login</Button>
+            </Popover>
         </AppBar>
     );
+}
+
+const login = () => {
+    
 }
