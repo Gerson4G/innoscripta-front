@@ -18,7 +18,7 @@ export default class Checkout extends Component {
   render() {
     return (
       <ContextData>
-        {({ user }) => (
+        {({ user, cart }) => (
             <>
                     Checkout Order
                     <form onSubmit={this.submit}>
@@ -38,6 +38,9 @@ export default class Checkout extends Component {
                             <InputLabel required shrink htmlFor="deliver-input">Deliver Address</InputLabel>
                             <Input id="deliver-input" aria-describedby="deliver-helper" />
                             <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
+                        </div>
+                        <div>
+                            Total Cost: {cart.reduce( (acc, {quantity, price}) => acc + (quantity * price) , 0 )}
                         </div>
                         <Button
                             variant="contained"
