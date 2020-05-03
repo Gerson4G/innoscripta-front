@@ -8,7 +8,7 @@ export const AppProvider = ({children}) => {
     const [cart, setCart] = useState([])
     
     return(
-        <AppContext.Provider value={{user, cart}}>
+        <AppContext.Provider value={{user, cart, setUser, setCart}}>
             {children}
         </AppContext.Provider>
     );
