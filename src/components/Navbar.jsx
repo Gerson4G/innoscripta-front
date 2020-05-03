@@ -41,7 +41,7 @@ export const Navbar = () => {
         <AppBar position="static">
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <Button onClick={() => toggle(true)}><MenuIcon /></Button>
+                <Button onClick={() => toggle(true)}><MenuIcon color="white"/></Button>
                 <Drawer anchor={'left'} open={open} onClose={() => toggle(false)}>
                     <Cart/>
                 </Drawer>

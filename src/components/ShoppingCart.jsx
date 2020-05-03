@@ -28,7 +28,7 @@ export const Cart = props => {
                     aria-labelledby="nested-list-subheader"
                     className={classes.root}
                 >
-                    {cart.map( pizza => 
+                    {cart.length > 0 ? cart.map( pizza => 
                         <ListItem>
                             <ListItemIcon>
                                <img style={{height: '60px', padding: '10px'}} src={pizza.img} alt={pizza.title} />
@@ -40,7 +40,9 @@ export const Cart = props => {
                             </div>
                         }/>
                     </ListItem>
-                    )}
+                    )
+                : <ListItem><ListItemText primary="No pizzas added to the shopping cart yet"/></ListItem>
+                }
                     
             </List>
             )}
