@@ -10,6 +10,8 @@ import Popover from '@material-ui/core/Popover';
 import { Cart } from './ShoppingCart';
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,25 +40,61 @@ export const Navbar = () => {
 
     const [email, setEmail] = React.useState(null);
     const [password, setPassword] = React.useState(null);
-
+    
+    const [message, showMessage] = React.useState({isOpen: false, text: null});
 
     const login = async () => {
       const body = { email, password };
-      (await fetch(`http://localhost:8000/api/users/login/`, {
+      const res = (await fetch(`http://localhost:8000/api/users/login/`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
         },
-      })).json()
-      .then(data => console.log(data))
+      }))
+      const data = await res.json();
+      if(res.status === 404 || res.status === 401){
+        showMessage({isOpen: true, text: data});
+      }
+      else{
+        showMessage({isOpen: true, text: `Welcome Back ${data.email}`});
+      }
+    }
+
+    const signup = async () => {
+
+        const body = { email, password };
+        (await fetch(`http://localhost:8000/api/users`, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })).json()
+        .then(data => showMessage({isOpen: true, text: "User Created! Now you can sign up"}))
     }
 
     const popoverOpen = Boolean(anchorEl);
     const id = popoverOpen ? 'simple-popover' : undefined;
 
+
     return(
         <AppBar position="static">
+                <Snackbar
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  open={message.isOpen}
+                  autoHideDuration={2000}
+                  onClose={() => showMessage({isOpen: false})}
+                  message={message.text}
+                  action={
+                      <IconButton size="small" aria-label="close" color="inherit" onClick={() => showMessage({isOpen: false})}>
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                  }
+                />
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Button onClick={() => toggle(true)}><ShoppingCartOutlined style={{color: "white"}}/></Button>
@@ -85,13 +123,9 @@ export const Navbar = () => {
                 <TextField style={{padding: "0 3px"}} label="Email" onChange={ ({target: {value}}) => setEmail(value)}/>
                 <TextField style={{padding: "0 3px"}} label="Password" onChange={ ({target: {value}}) => setPassword(value)}/>
                 <Button  variant="contained"  style={{verticalAlign: "bottom"}} color="primary" onClick={login}>Login</Button>
-                <Button  variant="outlined"  style={{verticalAlign: "bottom", marginLeft: "10px"}} color="primary" onClick={() => signup()}>Sign Up</Button>
+                <Button  variant="outlined"  style={{verticalAlign: "bottom", marginLeft: "10px"}} color="primary" onClick={signup}>Sign Up</Button>
               </div>
             </Popover>
         </AppBar>
     );
-}
-
-const signup = () => {
-
 }
