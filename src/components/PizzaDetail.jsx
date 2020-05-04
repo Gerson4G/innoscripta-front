@@ -18,8 +18,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
-import '../css/PizzaDetail.css';
-
+import { useQuery } from 'react-query';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
@@ -29,9 +29,6 @@ const useStyles = makeStyles({
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
   },
   pos: {
     marginBottom: 12,
@@ -46,68 +43,76 @@ const useStyles = makeStyles({
 const PizzaDetail = ({match}) => {
     const [quantity, setQuantity] = useState(1);
     const { params: {id} } = match;
-    const pizza = pizzaData.find( pizza => pizza.id === parseInt(id, 10));
     const classes = useStyles();
 
-    return (
-      <ContextData>
-        {({ setCart, cart }) => (
-          <div className={classes.container}>
-              <Card className={classes.root} variant="outlined">
-              <CardContent>
-                <div>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Pizza type {pizza.title}
-                  </Typography>
-                </div>
-                <div>
-                  <span><img src={pizza.img} alt={pizza.title} /></span>
-                  <span style={{display: "inline-block", verticalAlign: "top", padding: "0 40px"}}>
-                    <Typography className={classes.pos} color="textSecondary">
-                        Ingredients:
-                        <List component="nav">
-                          { pizza.ingredients.map( ingredient => 
-                            <ListItem>
-                              <ListItemText primary={ingredient} />
-                            </ListItem>
-                          )}
-                        </List>
+    const fetchPizza = async () => {
+      return await (await fetch(`http://localhost:8000/api/pizza-info/${id}`, {headers: {'Content-Type': 'application/json', "Accept": "application/json",}})).json()
+    }
+  
+    const {isFetching, data: pizza} = useQuery('fetchPizza', fetchPizza);
+
+    if(isFetching){
+      return<CircularProgress thickness={2} size={"20"} />;
+    }
+      return (
+        <ContextData>
+          {({ setCart, cart }) => (
+            <div className={classes.container}>
+                <Card className={classes.root} variant="outlined">
+                <CardContent>
+                  <div>
+                    <Typography align="center" variant="h2" color="textPrimary" gutterBottom>
+                      Pizza {pizza.name}
                     </Typography>
-                  </span>
-                </div>
-              </CardContent>
-              <CardActions>
-              <TextField
-                id="pizza-quantity"
-                label="Quantity"
-                type="number"
-                value={quantity}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                placeholder="How many pizzas"
-                size="small"
-                onChange={({target: {value}}) => setQuantity(parseInt(value, 10))}
-                error={quantity < 1}
-                style={{width: "5em", textAlign: "center"}}
-              />
-              <AddPizza setCart={setCart} cart={cart} pizza={pizza} quantity={quantity}/>
-              <Link to="/checkout">
-                <Button
-                  variant="contained"
-                  color="default"
-                  endIcon={<NextWeekOutlinedIcon/>}
-                >
-                  Checkout
-                </Button>
-              </Link>
-              </CardActions>
-              </Card>
-          </div>
-        )}
-      </ContextData>
-    );
+                  </div>
+                  <div>
+                    <span><img src={pizza.image_url} alt={pizza.name} style={{width: "40%"}}/></span>
+                    <span style={{display: "inline-block", verticalAlign: "top", padding: "0 40px"}}>
+                      <Typography className={classes.pos} variant="h4" color="textSecondary">
+                          Ingredients:
+                          <List component="nav">
+                            { pizza.pizza_ingredients.map( ({ingredient}) => 
+                              <ListItem divider>
+                                <ListItemText primary={ingredient} />
+                              </ListItem>
+                            )}
+                          </List>
+                      </Typography>
+                    </span>
+                  </div>
+                </CardContent>
+                <CardActions>
+                <TextField
+                  id="pizza-quantity"
+                  label="Quantity"
+                  type="number"
+                  value={quantity}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  placeholder="How many pizzas"
+                  size="small"
+                  onChange={({target: {value}}) => setQuantity(parseInt(value, 10))}
+                  error={quantity < 1}
+                  style={{width: "5em", textAlign: "center"}}
+                />
+                <AddPizza setCart={setCart} cart={cart} pizza={pizza} quantity={quantity}/>
+                <Link to="/checkout">
+                  <Button
+                    variant="contained"
+                    color="default"
+                    endIcon={<NextWeekOutlinedIcon/>}
+                  >
+                    Checkout
+                  </Button>
+                </Link>
+                </CardActions>
+                </Card>
+            </div>
+          )}
+        </ContextData>
+      );
 }
 
 export default PizzaDetail;
