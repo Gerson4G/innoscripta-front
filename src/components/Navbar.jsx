@@ -67,6 +67,7 @@ export const Navbar = () => {
                 <TextField style={{padding: "0 3px"}} label="Email" />
                 <TextField style={{padding: "0 3px"}} label="Password" />
                 <Button  variant="contained"  style={{verticalAlign: "bottom"}} color="primary" onClick={() => login()}>Login</Button>
+                <Button  variant="outlined"  style={{verticalAlign: "bottom", marginLeft: "10px"}} color="primary" onClick={() => signup()}>Sign Up</Button>
               </div>
             </Popover>
         </AppBar>
@@ -74,5 +75,9 @@ export const Navbar = () => {
 }
 
 const login = () => {
+
+}
+
+const signup = () => {
 
 }

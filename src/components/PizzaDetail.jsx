@@ -90,6 +90,7 @@ const PizzaDetail = ({match}) => {
                 size="small"
                 onChange={({target: {value}}) => setQuantity(parseInt(value, 10))}
                 error={quantity < 1}
+                style={{width: "5em", textAlign: "center"}}
               />
               <AddPizza setCart={setCart} cart={cart} pizza={pizza} quantity={quantity}/>
               <Link to="/checkout">
