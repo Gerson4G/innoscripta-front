@@ -4,10 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import ShoppingCartOutlined from '@material-ui/icons/ShoppingCartOutlined';
 import Drawer from '@material-ui/core/Drawer';
 import Popover from '@material-ui/core/Popover';
 import { Cart } from './ShoppingCart';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,7 +42,7 @@ export const Navbar = () => {
         <AppBar position="static">
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <Button onClick={() => toggle(true)}><MenuIcon color="white"/></Button>
+                <Button onClick={() => toggle(true)}><ShoppingCartOutlined/></Button>
                 <Drawer anchor={'left'} open={open} onClose={() => toggle(false)}>
                     <Cart/>
                 </Drawer>
@@ -62,9 +63,11 @@ export const Navbar = () => {
                 horizontal: 'center',
                 }}
             >
-                <input></input>
-                <input></input>
-                <Button onClick={() => login()}>Login</Button>
+              <div style={{padding: "10px"}}>
+                <TextField style={{padding: "0 3px"}} label="Email" />
+                <TextField style={{padding: "0 3px"}} label="Password" />
+                <Button  variant="contained"  style={{verticalAlign: "bottom"}} color="primary" onClick={() => login()}>Login</Button>
+              </div>
             </Popover>
         </AppBar>
     );
