@@ -7,7 +7,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import { pizzaData } from '../data/pizzas';
+import { useQuery } from 'react-query';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import '../css/App.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     width: 500,
-    height: 450,
+    height: 800,
     padding: '15px',
   },
   icon: {
@@ -31,24 +32,30 @@ const useStyles = makeStyles((theme) => ({
 const Menu = () => {
   const classes = useStyles();
 
+  const fetchPizzas = async () => {
+    return await (await fetch(`http://localhost:8000/api/pizza-info`, {headers: {'Content-Type': 'application/json', "Accept": "application/json",}})).json()
+  }
+
+  const {isFetching, data: pizzaData} = useQuery('fetchPizza', fetchPizzas)
+
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
+      <GridList cellHeight={200} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <Typography variant="h6" className={classes.title}>
                 YUMMI PIZZA
           </Typography>
         </GridListTile>
-        {pizzaData.map((pizza) => (
-          <GridListTile key={pizza.img} className="menu-option">
+        {isFetching ? <CircularProgress thickness={2} size={"20"} /> : pizzaData.map((pizza) => (
+          <GridListTile key={pizza.id} className="menu-option">
             <Link to={`/pizza/${pizza.id}`}>
-                <img src={pizza.img} alt={pizza.title} />
+                <img src={pizza.image_url} alt={pizza.name} style={{"height": "100%"}}/>
             </Link>
             <GridListTileBar
-              title={pizza.title}
+              title={pizza.name}
               subtitle={<span>Cost: {pizza.price}</span>}
               actionIcon={
-                <IconButton aria-label={`info about ${pizza.title}`} className={classes.icon}>
+                <IconButton aria-label={`info about ${pizza.name}`} className={classes.icon}>
                   <InfoIcon />
                 </IconButton>
               }

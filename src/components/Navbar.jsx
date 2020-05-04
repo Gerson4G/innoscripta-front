@@ -44,7 +44,6 @@ export const Navbar = () => {
       (await fetch(`http://localhost:8000/api/users/login/`, {
         method: 'POST',
         body: JSON.stringify(body),
-        mode: 'no-cors', // no-cors, *cors, same-origin
         headers: {
           'Content-Type': 'application/json'
         },
