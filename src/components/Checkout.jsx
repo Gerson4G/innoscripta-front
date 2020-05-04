@@ -12,11 +12,16 @@ import { Cart } from './ShoppingCart';
 import Card from '@material-ui/core/Card';
 
 export default class Checkout extends Component {
-    state = { proceed: false }
+    state = { dialogOpen: false }
     submit = (e) => {
         e.preventDefault();
-        this.setState({proceed: true});
+        this.setState({dialogOpen: true});
     }
+
+    toggleDialog = (value) => {
+        this.setState({dialogOpen: value});
+    }
+
   render() {
     return (
       <ContextData>
@@ -56,7 +61,7 @@ export default class Checkout extends Component {
                             </Button>
                         </form>
                     </Card>
-                    <PromptDialog open={this.state.proceed}/>
+                    <PromptDialog dialogOpen={this.state.dialogOpen} toggleDialog={this.toggleDialog}/>
                 </div>
             )}
       </ContextData>
@@ -64,16 +69,13 @@ export default class Checkout extends Component {
   }
 }
 
-const PromptDialog = props => {
-    const { open } = props;
+const PromptDialog = ({toggleDialog, dialogOpen}) => {
     const [confirmed, confirm] = useState(false);
-
     return(
         <>
             <Dialog
-                open={open}
+                open={dialogOpen}
                 keepMounted
-                //onClose={handleClose}
             >
                 <DialogTitle>{"Confirm your order"}</DialogTitle>
                 <DialogContent>
@@ -82,7 +84,7 @@ const PromptDialog = props => {
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button /* onClick={handleClose} */ color="primary">
+                <Button color="primary" onClick={() => toggleDialog(false)}>
                     Cancel
                 </Button>
                 <Button onClick={() => {confirm(true)}} color="primary">
