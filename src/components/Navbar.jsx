@@ -48,7 +48,7 @@ export const Navbar = () => {
 
     const login = async () => {
       const body = { email, password };
-      const res = (await fetch(`http://localhost:8000/api/users/login/`, {
+      const res = (await fetch(`https://innoscripta-back.herokuapp.com/api/users/login/`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -68,7 +68,7 @@ export const Navbar = () => {
     const signup = async () => {
 
         const body = { email, password };
-        (await fetch(`http://localhost:8000/api/users`, {
+        (await fetch(`hhttps://innoscripta-back.herokuapp.com/api/users`, {
           method: 'POST',
           body: JSON.stringify(body),
           headers: {

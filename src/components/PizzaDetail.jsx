@@ -45,7 +45,7 @@ const PizzaDetail = ({match}) => {
     const classes = useStyles();
 
     const fetchPizza = async () => {
-      return await (await fetch(`http://localhost:8000/api/pizza-info/${id}`, {headers: {'Content-Type': 'application/json', "Accept": "application/json",}})).json()
+      return await (await fetch(`https://innoscripta-back.herokuapp.com/api/pizza-info/${id}`, {headers: {'Content-Type': 'application/json', "Accept": "application/json",}})).json()
     }
   
     const {isFetching, data: pizza} = useQuery('fetchPizza', fetchPizza);
