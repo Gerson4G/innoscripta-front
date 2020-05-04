@@ -53,7 +53,7 @@ const Menu = () => {
             </Link>
             <GridListTileBar
               title={pizza.name}
-              subtitle={<span>Cost: {pizza.price}</span>}
+              subtitle={<span>Cost: {pizza.cost}</span>}
               actionIcon={
                 <IconButton aria-label={`info about ${pizza.name}`} className={classes.icon}>
                   <InfoIcon />
