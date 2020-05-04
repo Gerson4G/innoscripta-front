@@ -9,6 +9,8 @@ Security for password or JWT was not applied.
 
 Git Flow workflow was not followed.
 
+Heroku URL:https://innoscripta-front.herokuapp.com/
+
 For development use just install with yarn install command.
 
 ## Available Scripts
