@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { pizzaData } from '../data/pizzas';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -50,9 +49,8 @@ const PizzaDetail = ({match}) => {
     }
   
     const {isFetching, data: pizza} = useQuery('fetchPizza', fetchPizza);
-
     if(isFetching){
-      return<CircularProgress thickness={2} size={"20"} />;
+      return <CircularProgress thickness={2} size={"20"} />;
     }
       return (
         <ContextData>
@@ -71,11 +69,11 @@ const PizzaDetail = ({match}) => {
                       <Typography className={classes.pos} variant="h4" color="textSecondary">
                           Ingredients:
                           <List component="nav">
-                            { pizza.pizza_ingredients.map( ({ingredient}) => 
-                              <ListItem divider>
+                            { pizza.pizza_ingredients ? pizza.pizza_ingredients.map( ({ingredient}) => 
+                              <ListItem divider key={ingredient}>
                                 <ListItemText primary={ingredient} />
                               </ListItem>
-                            )}
+                            ) : null}
                           </List>
                       </Typography>
                     </span>

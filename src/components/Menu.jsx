@@ -36,7 +36,7 @@ const Menu = () => {
     return await (await fetch(`http://localhost:8000/api/pizza-info`, {headers: {'Content-Type': 'application/json', "Accept": "application/json",}})).json()
   }
 
-  const {isFetching, data: pizzaData} = useQuery('fetchPizza', fetchPizzas)
+  const {isFetching, data: pizzaData} = useQuery('fetchPizza', fetchPizzas);
 
   return (
     <div className={classes.root}>
@@ -46,7 +46,7 @@ const Menu = () => {
                 YUMMI PIZZA
           </Typography>
         </GridListTile>
-        {isFetching ? <CircularProgress thickness={2} size={"20"} /> : pizzaData.map((pizza) => (
+        {(isFetching || !Array.isArray(pizzaData)) ? <CircularProgress thickness={2} size={"20"} /> : pizzaData.map((pizza) => (
           <GridListTile key={pizza.id} className="menu-option">
             <Link to={`/pizza/${pizza.id}`}>
                 <img src={pizza.image_url} alt={pizza.name} style={{"height": "100%"}}/>

@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Link } from 'react-router-dom';
 import { ContextData } from './AppProvider';
 import { Cart } from './ShoppingCart';
+import Card from '@material-ui/core/Card';
 
 export default class Checkout extends Component {
     state = { proceed: false }
@@ -22,36 +23,39 @@ export default class Checkout extends Component {
         {({ user, cart }) => (
             <div style={{display: "flex", justifyContent: "space-evenly", width: "900px"}}>
                     <Cart/>
-                    <form onSubmit={this.submit}>
-                        <div style={{margin: "3em"}}>
-                            <InputLabel required shrink htmlFor="name-input">Full Name</InputLabel>
-                            <Input id="name-input" aria-describedby="name-helper" defaultValue={user.name}/>
-                        </div>
-                        <div style={{margin: "3em"}}>
-                            <InputLabel required shrink htmlFor="email-input">Email address</InputLabel>
-                            <Input id="email-input" aria-describedby="email-helper" />
-                            <FormHelperText id="email-helper">We'll never share your email.</FormHelperText>
-                            <InputLabel required shrink htmlFor="phone-input">Phone Number</InputLabel>
-                            <Input id="phone-input" aria-describedby="phone-helper" />
-                            <FormHelperText id="phone-helper">An alternative way to contact you.</FormHelperText>
-                        </div>
-                        <div style={{margin: "3em"}}>
-                            <InputLabel required shrink htmlFor="deliver-input">Deliver Address</InputLabel>
-                            <Input id="deliver-input" aria-describedby="deliver-helper" />
-                            <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
-                        </div>
-                        <div style={{margin: "3em"}}>
-                            Total Cost: {cart.reduce( (acc, {quantity, price}) => acc + (quantity * price) , 0 )}
-                        </div>
-                        <Button
-                            variant="contained"
-                            color="default"
-                            endIcon={<NextWeekOutlinedIcon/>}
-                            type="submit"
-                        >
-                            Buy
-                        </Button>
-                    </form>
+                    <Card style={{boxShadow: "2px 2px gray"}} variant="outlined">
+                        <form onSubmit={this.submit}>
+                            <div style={{margin: "3em"}}>
+                                <InputLabel required shrink htmlFor="name-input">Full Name</InputLabel>
+                                <Input id="name-input" aria-describedby="name-helper" defaultValue={user.name}/>
+                            </div>
+                            <div style={{margin: "3em"}}>
+                                <InputLabel required shrink htmlFor="email-input">Email address</InputLabel>
+                                <Input id="email-input" aria-describedby="email-helper" />
+                                <FormHelperText id="email-helper">We'll never share your email.</FormHelperText>
+                                <InputLabel required shrink htmlFor="phone-input">Phone Number</InputLabel>
+                                <Input id="phone-input" aria-describedby="phone-helper" />
+                                <FormHelperText id="phone-helper">An alternative way to contact you.</FormHelperText>
+                            </div>
+                            <div style={{margin: "3em"}}>
+                                <InputLabel required shrink htmlFor="deliver-input">Deliver Address</InputLabel>
+                                <Input id="deliver-input" aria-describedby="deliver-helper" />
+                                <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
+                            </div>
+                            <div style={{margin: "3em"}}>
+                                Total Cost: {cart.reduce( (acc, {quantity, price}) => acc + (quantity * price) , 0 )}
+                            </div>
+                            <Button
+                                variant="contained"
+                                color="default"
+                                endIcon={<NextWeekOutlinedIcon/>}
+                                type="submit"
+                                style={{left: "40%", top: "-15px", scale: "1.3"}}
+                            >
+                                Buy
+                            </Button>
+                        </form>
+                    </Card>
                     <PromptDialog open={this.state.proceed}/>
                 </div>
             )}
