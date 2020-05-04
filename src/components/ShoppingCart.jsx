@@ -31,12 +31,12 @@ export const Cart = props => {
                     {cart.length > 0 ? cart.map( pizza => 
                         <ListItem>
                             <ListItemIcon>
-                               <img style={{height: '60px', padding: '10px'}} src={pizza.img} alt={pizza.title} />
+                               <img style={{height: '60px', padding: '10px'}} src={pizza.image_url} alt={pizza.name} />
                             </ListItemIcon>
-                        <ListItemText primary={pizza.title} secondary={
+                        <ListItemText primary={pizza.name} secondary={
                             <div>
                                 <div>Quantity: {pizza.quantity}</div>
-                                <div>SubTotal: {pizza.price * pizza.quantity}</div>
+                                <div>SubTotal: {pizza.cost * pizza.quantity}</div>
                             </div>
                         }/>
                     </ListItem>
