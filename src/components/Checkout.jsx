@@ -43,7 +43,7 @@ export default class Checkout extends Component {
                                 <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
                             </div>
                             <div style={{margin: "3em"}}>
-                                Total Cost: {cart.reduce( (acc, {quantity, price}) => acc + (quantity * price) , 0 )}
+                                Total Cost: {cart.reduce( (acc, {quantity, cost}) => acc + (quantity * cost) , 0 )}
                             </div>
                             <Button
                                 variant="contained"
