@@ -9,6 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Popover from '@material-ui/core/Popover';
 import { Cart } from './ShoppingCart';
 import TextField from '@material-ui/core/TextField';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,12 +59,13 @@ export const Navbar = () => {
         <AppBar position="static">
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <Button onClick={() => toggle(true)}><ShoppingCartOutlined/></Button>
+                <Button onClick={() => toggle(true)}><ShoppingCartOutlined style={{color: "white"}}/></Button>
                 <Drawer anchor={'left'} open={open} onClose={() => toggle(false)}>
                     <Cart/>
                 </Drawer>
             </IconButton>
-            <Button  onClick={handleClick} color="inherit">Login</Button>
+            <Link to="/"><Button color="primary" variant="contained">Pizzas Menu</Button></Link>
+            <Button style={{marginLeft: "10px"}} onClick={handleClick} variant="contained" color="primary">Login</Button>
             </Toolbar>
             <Popover
                 id={id}
