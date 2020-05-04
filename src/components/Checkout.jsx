@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Link } from 'react-router-dom';
 import { ContextData } from './AppProvider';
+import { Cart } from './ShoppingCart';
 
 export default class Checkout extends Component {
     state = { proceed: false }
@@ -19,14 +20,14 @@ export default class Checkout extends Component {
     return (
       <ContextData>
         {({ user, cart }) => (
-            <>
-                    Checkout Order
+            <div style={{display: "flex", justifyContent: "space-evenly", width: "900px"}}>
+                    <Cart/>
                     <form onSubmit={this.submit}>
-                        <div>
+                        <div style={{margin: "3em"}}>
                             <InputLabel required shrink htmlFor="name-input">Full Name</InputLabel>
                             <Input id="name-input" aria-describedby="name-helper" defaultValue={user.name}/>
                         </div>
-                        <div>
+                        <div style={{margin: "3em"}}>
                             <InputLabel required shrink htmlFor="email-input">Email address</InputLabel>
                             <Input id="email-input" aria-describedby="email-helper" />
                             <FormHelperText id="email-helper">We'll never share your email.</FormHelperText>
@@ -34,12 +35,12 @@ export default class Checkout extends Component {
                             <Input id="phone-input" aria-describedby="phone-helper" />
                             <FormHelperText id="phone-helper">An alternative way to contact you.</FormHelperText>
                         </div>
-                        <div>
+                        <div style={{margin: "3em"}}>
                             <InputLabel required shrink htmlFor="deliver-input">Deliver Address</InputLabel>
                             <Input id="deliver-input" aria-describedby="deliver-helper" />
                             <FormHelperText id="deliver-helper">Confirm this is the address to deliver</FormHelperText>
                         </div>
-                        <div>
+                        <div style={{margin: "3em"}}>
                             Total Cost: {cart.reduce( (acc, {quantity, price}) => acc + (quantity * price) , 0 )}
                         </div>
                         <Button
@@ -52,7 +53,7 @@ export default class Checkout extends Component {
                         </Button>
                     </form>
                     <PromptDialog open={this.state.proceed}/>
-                </>
+                </div>
             )}
       </ContextData>
     )
@@ -70,19 +71,18 @@ const PromptDialog = props => {
                 keepMounted
                 //onClose={handleClose}
             >
-                <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+                <DialogTitle>{"Confirm your order"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
-                Let Google help apps determine location. This means sending anonymous location data to
-                    Google, even when no apps are running.
+                    You confirm the previous information entered about order (Pizzas, quantity and cost) and delivery?
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                 <Button /* onClick={handleClose} */ color="primary">
-                    Disagree
+                    Cancel
                 </Button>
                 <Button onClick={() => {confirm(true)}} color="primary">
-                    Agree
+                    Confirm
                 </Button>
                 </DialogActions>
             </Dialog>

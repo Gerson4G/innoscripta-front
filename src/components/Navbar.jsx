@@ -35,6 +35,23 @@ export const Navbar = () => {
       setAnchorEl(null);
     };
 
+    const [email, setEmail] = React.useState(null);
+    const [password, setPassword] = React.useState(null);
+
+
+    const login = async () => {
+      const body = { email, password };
+      (await fetch(`http://localhost:8000/api/users/login/`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        mode: 'no-cors', // no-cors, *cors, same-origin
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })).json()
+      .then(data => console.log(data))
+    }
+
     const popoverOpen = Boolean(anchorEl);
     const id = popoverOpen ? 'simple-popover' : undefined;
 
@@ -64,18 +81,14 @@ export const Navbar = () => {
                 }}
             >
               <div style={{padding: "10px"}}>
-                <TextField style={{padding: "0 3px"}} label="Email" />
-                <TextField style={{padding: "0 3px"}} label="Password" />
-                <Button  variant="contained"  style={{verticalAlign: "bottom"}} color="primary" onClick={() => login()}>Login</Button>
+                <TextField style={{padding: "0 3px"}} label="Email" onChange={ ({target: {value}}) => setEmail(value)}/>
+                <TextField style={{padding: "0 3px"}} label="Password" onChange={ ({target: {value}}) => setPassword(value)}/>
+                <Button  variant="contained"  style={{verticalAlign: "bottom"}} color="primary" onClick={login}>Login</Button>
                 <Button  variant="outlined"  style={{verticalAlign: "bottom", marginLeft: "10px"}} color="primary" onClick={() => signup()}>Sign Up</Button>
               </div>
             </Popover>
         </AppBar>
     );
-}
-
-const login = () => {
-
 }
 
 const signup = () => {
