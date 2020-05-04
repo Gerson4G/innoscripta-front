@@ -11,6 +11,7 @@ import { Cart } from './ShoppingCart';
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
+import { ContextData } from './AppProvider';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,8 @@ export const Navbar = () => {
     
     const [message, showMessage] = React.useState({isOpen: false, text: null});
 
+    const [user, logUser] = React.useState({});
+
     const login = async () => {
       const body = { email, password };
       const res = (await fetch(`http://localhost:8000/api/users/login/`, {
@@ -58,6 +61,7 @@ export const Navbar = () => {
       }
       else{
         showMessage({isOpen: true, text: `Welcome Back ${data.email}`});
+        logUser(data);
       }
     }
 
@@ -80,21 +84,26 @@ export const Navbar = () => {
 
     return(
         <AppBar position="static">
-                <Snackbar
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  open={message.isOpen}
-                  autoHideDuration={2000}
-                  onClose={() => showMessage({isOpen: false})}
-                  message={message.text}
-                  action={
-                      <IconButton size="small" aria-label="close" color="inherit" onClick={() => showMessage({isOpen: false})}>
-                        <CloseIcon fontSize="small" />
-                      </IconButton>
-                  }
-                />
+          <ContextData>
+            {({ setUser }) => (
+              <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={message.isOpen}
+              autoHideDuration={2000}
+              onClose={() => showMessage({isOpen: false})}
+              message={message.text}
+              onEntered={() => { if(user.email)setUser(user)}}
+              action={
+                  <IconButton size="small" aria-label="close" color="inherit" onClick={() => showMessage({isOpen: false})}>
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+              }
+              />
+            )}
+          </ContextData>
             <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <Button onClick={() => toggle(true)}><ShoppingCartOutlined style={{color: "white"}}/></Button>
@@ -103,7 +112,7 @@ export const Navbar = () => {
                 </Drawer>
             </IconButton>
             <Link to="/"><Button color="primary" variant="contained">Pizzas Menu</Button></Link>
-            <Button style={{marginLeft: "10px"}} onClick={handleClick} variant="contained" color="primary">Login</Button>
+            <Button style={{marginLeft: "10px"}} onClick={handleClick} variant="contained" color="primary">{user?.email ?? 'Login'}</Button>
             </Toolbar>
             <Popover
                 id={id}

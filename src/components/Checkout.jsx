@@ -36,7 +36,7 @@ export default class Checkout extends Component {
                             </div>
                             <div style={{margin: "3em"}}>
                                 <InputLabel required shrink htmlFor="email-input">Email address</InputLabel>
-                                <Input id="email-input" aria-describedby="email-helper" />
+                                <Input id="email-input" aria-describedby="email-helper" value={user.email}/>
                                 <FormHelperText id="email-helper">We'll never share your email.</FormHelperText>
                                 <InputLabel required shrink htmlFor="phone-input">Phone Number</InputLabel>
                                 <Input id="phone-input" aria-describedby="phone-helper" />
